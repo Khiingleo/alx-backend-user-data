@@ -5,6 +5,8 @@ contains filtered data
 import re
 from typing import List
 import logging
+from os import getenv
+import mysql.connector
 
 
 PII_FIELDS = ('name', 'email', 'password', 'ssn', 'phone')
@@ -50,3 +52,14 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """returns a connector to a mysql database"""
+    db = mysql.connector.connection.MySQLConnection(
+        user=getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        password=getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        host=getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        database=getenv('PERSONAL_DATA_DB_NAME')
+    )
+    return db
