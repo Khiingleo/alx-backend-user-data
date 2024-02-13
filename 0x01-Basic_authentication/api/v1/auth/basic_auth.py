@@ -56,7 +56,7 @@ class BasicAuth(Auth):
         if ":" not in decode:
             return (None, None)
 
-        result = decode.split(":")
+        result = decode.split(":", 1)
         return (result[0], result[1])
 
     def user_object_from_credentials(self, user_email: str, user_pwd:
