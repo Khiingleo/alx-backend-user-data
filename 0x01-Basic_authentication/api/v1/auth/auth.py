@@ -9,14 +9,14 @@ class Auth:
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
-        returns false (for now)
+        determines which routes require authentication
         """
         if path is None:
             return True
         if excluded_paths is None or len(excluded_paths) == 0:
             return True
         for excluded_path in excluded_paths:
-            if excluded_path[-1] == "/":
+            if excluded_path[-1] == '/':
                 if excluded_path[:-1] in path:
                     return False
 
@@ -27,9 +27,13 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """
-        returns None (for now)
+        validate all requests to secure the API
         """
-        return None
+        if request is None:
+            return None
+        if 'Authorization' not in request.headers:
+            return None
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
