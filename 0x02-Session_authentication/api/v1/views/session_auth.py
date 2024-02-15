@@ -41,3 +41,18 @@ def auth_session():
     result = jsonify(user.to_json())
     result.set_cookie(cookie, session)
     return result
+
+
+@app_views.route('auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout():
+    """
+    deletes the user session / logout
+    """
+    from api.v1.app import auth
+
+    delete = auth.destroy_session(request)
+    if not delete:
+        abort(404)
+
+    return jsonify({}), 200
