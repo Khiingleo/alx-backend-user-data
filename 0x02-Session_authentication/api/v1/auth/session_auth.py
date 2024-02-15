@@ -7,4 +7,4 @@ from api.v1.auth.auth import Auth
 
 class SessionAuth(Auth):
     """ session authentication class"""
-    pass # empty for now
+    pass  # empty for now
